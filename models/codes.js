@@ -1,26 +1,26 @@
-const mongoose = require ('mongoose');
-const codes=mongoose.Schema({
-    
-id_security: {
+const mongoose = require('mongoose');
+const codes = mongoose.Schema({
+
+  id_security: {
     type: Number,
     require: true
-},
-code: {
+  },
+  code: {
     type: Number,
     require: true
-},
-timestamp: {
+  },
+  timestamp: {
     type: Date,
     require: true
-},
-status: {
+  },
+  status: {
     type: Boolean,
     require: true
-},
-id_transaction: {
-    type:Number,
+  },
+  id_transaction: {
+    type: Number,
     require: true
-}
-   
-}); 
-module.exports=mongoose.model('code', codes);
+  }
+
+});
+module.exports = mongoose.model('code', codes);
