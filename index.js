@@ -6,7 +6,8 @@ var logger = require('morgan');
 
 const conectar_DB = require('./config/database');
 const cors = require('cors');
-const ruta= require('./routes/routes');
+const router= require('./routes/index');
+ 
 
 var app = express();
 conectar_DB();
@@ -24,7 +25,7 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
  
-app.use('/api', ruta);
+app.use('/api', router);
   
 app.listen(3000, () => {
   console.log("Se ejecuta en el puerto 3000")
