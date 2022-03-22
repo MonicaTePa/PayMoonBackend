@@ -14,15 +14,15 @@ const pocketSchema = mongoose.Schema({
       require: true
   },
   receptions: {
-      type: String,
+      type: Number,
       require: true
   },
   payments: {
-      type: String,
+      type: Number,
       require: true,
   },
   deposits: {
-      type: String,
+      type: Number,
       require: true
   },
   date_cre: {

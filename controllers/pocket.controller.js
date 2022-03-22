@@ -50,7 +50,10 @@ exports.putPocket = async(req, res) => {
 exports.deletePocket = async(req, res) => {
   try {
     let data_pocket = await Pocket.findByIdAndRemove({ _id: req.params.id })
-    res.send('Eliminado satisfactoriamente', data_pocket);
+    res.send({
+      message: 'Eliminado satisfactoriamente', 
+      data_pocket
+    });
   } catch (error) {
       res.status(500).send('Ups..hubo un error');
   }
