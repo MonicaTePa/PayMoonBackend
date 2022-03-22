@@ -2,8 +2,9 @@ const express = require('express');
 const transactionsRouter = require('../routes/transactions.route');
 const depositsRouter = require('../routes/deposits.route');
 const cardsRouter = require('../routes/cards.route');
-const pocketRouter = require('../routes/pocket.route')
-const codesRouter = require('../routes/codes')
+const pocketRouter = require('../routes/pocket.route');
+const codesRouter = require('../routes/codes');
+const usersRouter = require('../routes/users.route');
 
 function routerApi(app) {
     const router = express.Router();
@@ -13,6 +14,7 @@ function routerApi(app) {
     router.use('/cards',cardsRouter);
     router.use('/pockets', pocketRouter);
     router.use('/codes', codesRouter);
+    router.use('/users',usersRouter);
 }
 
 module.exports = routerApi;
