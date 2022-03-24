@@ -29,7 +29,7 @@ const users = mongoose.Schema({
     timestamp:{
         type: Date,
         default: Date.now()
-    }
+    } 
     
 });
  
