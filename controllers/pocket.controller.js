@@ -12,6 +12,21 @@ exports.postPocket = async(req, res) => {
   }
 }
 
+exports.getPockets = async(req, res) => {
+  try{
+    const result = await Pocket.find();            
+    res.send(result);    
+    if(result.length === 0){                
+      console.log("No hay bolsillos registrados");            
+    }        
+  }catch(error){
+    console.log(error);
+    res.status(500).send({
+      message: "Error al hacer la consulta"
+    });
+  }        
+}
+
 exports.getPocket = async(req, res) => {
   try {
     const data_pocket = await Pocket.findById(req.params.id);
