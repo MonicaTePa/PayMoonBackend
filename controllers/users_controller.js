@@ -12,12 +12,18 @@ exports.getusers = async(req, res) => {
  res.status(500).send('ups.. hubo un error, contacte al administrador');
  
  }
- 
- 
- 
- 
+}
 
-},
+exports.getuserbyid = async(req,res) => {
+     try{
+         let data = await users.findById(req.params.id);
+         res.send(data)
+     }catch(error){
+        console.log(error);
+        res.status(500).send('ups.. hubo un error, contacte al administrador');
+    }
+}
+
 exports.postusers= async(req,res) =>{
 
 try{

@@ -1,3 +1,4 @@
+const res = require('express/lib/response');
 const Pocket = require('../models/Pocket.model');
 
 
@@ -56,5 +57,14 @@ exports.deletePocket = async(req, res) => {
     });
   } catch (error) {
       res.status(500).send('Ups..hubo un error');
+  }
+}
+
+exports.getPocketByUserId = async(req,res) => {
+  try{
+    let user_pocket = await Pocket.findOne({id_user: req.params.id});
+    res.send(user_pocket);
+  }catch(error){
+    res.status(500).send('Ups..hubo un error');
   }
 }

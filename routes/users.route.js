@@ -5,6 +5,7 @@ const users_controller=require('../controllers/users_controller.js');
 
 
 router.get('/', users_controller.getusers);
+router.get('/:id', users_controller.getuserbyid);
 router.post('/', users_controller.postusers);
 router.put('/:id', users_controller.putusers);
 router.delete('/:id', users_controller.deleteusers);
