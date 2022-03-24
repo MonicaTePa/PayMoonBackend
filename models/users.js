@@ -7,15 +7,21 @@ const users = mongoose.Schema({
         required: true
     },
     identification:{
-        type: Number,
+        type: String,
         required: true
-    },
+    },   
+    
     birth_date:{
         type: Date,
         required: true
     },
+
+    id_date:{
+        type: Date,
+        required: true
+    },
     phone_number:{
-        type: Number,
+        type: String,
         required: true
     },
     email:{
@@ -29,10 +35,9 @@ const users = mongoose.Schema({
     timestamp:{
         type: Date,
         default: Date.now()
-    } 
-    
-});
- 
+    }    
+}); 
+
  
 module.exports= mongoose.model('users', users)
 
