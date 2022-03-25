@@ -45,9 +45,9 @@ exports.getusers = async(req, res) => {
 },
 
 exports.login = async(req, res) => {
-
-  try{
  
+  try{
+
     // Validaciones de login
     const { error } = schemaLogin.validate(req.body)
     if(error) return res.status(400).json({error: error.details[0].message})
@@ -71,7 +71,29 @@ exports.login = async(req, res) => {
         error: null,
         data: { token },
         message: 'Bienvenido'
-    })
+    }) /*
+    if (req.body) {
+    var user = req.body;
+    console.log(user)
+    const info = await users.findOne({email: req.body.email})
+    const validPassword = await bcrypt.compare(req.body.password, info.password)
+    console.log(validPassword)
+    if (users.email===user.email && users.password === req.body.password) {
+      var token = jwt.sign(user, JWT_Secret);
+      res.status(200).send({
+        signed_user: user,
+        token: token
+      });
+    } else {
+      res.status(403).send({
+        errorMessage: 'Authorisation required!'
+      });
+    }
+  } else {
+    res.status(403).send({
+      errorMessage: 'Please provide email and password'
+    });
+  } */
     }
     catch(error){
 console.log(error);
