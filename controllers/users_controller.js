@@ -27,6 +27,7 @@ exports.getuserbyid = async(req,res) => {
 exports.postusers= async(req,res) =>{
 
 try{
+    
 let data;
 data=new users(req.body);
 await data.save();

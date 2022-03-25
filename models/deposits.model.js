@@ -4,7 +4,7 @@ const depositSchema = mongoose.Schema({
 
     id_deposit:{
         type:String,
-        required:true
+        required: false
     },
     id_user:{
         type: String,
@@ -12,7 +12,8 @@ const depositSchema = mongoose.Schema({
     },
     type:{
         type: String,
-        required: true
+        required: false,
+        default: "CARD"
     },
     id_card:{
         type:String,        

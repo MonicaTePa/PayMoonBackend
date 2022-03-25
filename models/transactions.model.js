@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const transactionSchema = mongoose.Schema({
     id_transaction: {
         type: String,
-        required: true
-    },
+        required: false
+    },    
     type:{
         type:String,
         required: true
