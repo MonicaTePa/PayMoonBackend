@@ -64,7 +64,7 @@ try{
 },
 exports.putusers = async(req, res) => {
     try {
-        const { full_name, identification, birth_date, number, email, password, id_cards} = req.body
+        const { full_name, identification, birth_date, phone_number, email, password, id_date} = req.body
         let data= await users.findById(req.params.id);
 
         if (!data) {
@@ -74,15 +74,15 @@ exports.putusers = async(req, res) => {
         data.full_name = full_name;
         data.identification = identification;
         data.birth_date = birth_date;
-        data.number = number;
+        data.number = phone_number;
         data.email = email;
         data.password = password;
-        data.id_cards = id_cards;
+        data.id_date = id_date;
            
     
 
-        data = await users.findOneAndUpdate({ _id: req.params.id }, data, { new: true })
-        res.json(data);
+        await users.findOneAndUpdate({ _id: req.params.id }, data, { new: true })
+        res.send({message: "Actualización exitosa"})
 
     } catch (error) {
         console.log(error);
