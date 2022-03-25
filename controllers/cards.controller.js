@@ -6,10 +6,13 @@ class CardsController {
   async addCard(req, res) {
     try {
       const result = await CardsModel.findOne({
-        id_card: req.body.id_card
+        $or: [
+          {card_number: req.body.card_number},
+          {card_name: req.body.card_name}
+      ]
       }).exec();
       console.log(result);
-      if (!result) {
+      if (result==undefined || result ==null) {
         const card = new CardsModel(req.body);
         await card.save();
         res.send({
@@ -108,6 +111,25 @@ class CardsController {
       res.status(500).send({
         message: "Error al hacer la eliminación"
       });
+    }
+  }
+
+  async getCardByUserId(req, res) {
+    try {
+      const result = await CardsModel.find({id_user: req.params.id});
+      if (result) {
+        res.send(result);
+      } else {
+        res.status(404).send({
+          message: "No se encontraron coincidencias"
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Error al hacer la consulta"
+      });
+      console.log(error);
     }
   }
 

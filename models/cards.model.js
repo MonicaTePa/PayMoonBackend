@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const cardSchema = mongoose.Schema({
 
-  id_card: {
+  id_user:{
     type: String,
     required: true
-  },
+  },    
   card_number: {
     type: String,
     required: true
@@ -33,7 +33,13 @@ const cardSchema = mongoose.Schema({
   card_name: {
     type: String,
     required: true
+  }, 
+  timestamp: {
+    type: Date,
+    default: Date.now()
+
   }
+
 });
 
 module.exports = mongoose.model('Cards', cardSchema);

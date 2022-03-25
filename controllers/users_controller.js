@@ -49,9 +49,19 @@ exports.getuserbyid = async(req,res) => {
     }
 }
 
-exports.postusers= async(req,res) =>{
 
-},
+exports.getUserByPhone = async(req,res) =>{
+    try{
+        const user = await users.findOne({phone_number: req.params.pn}).exec();
+        if(user){
+            res.send(user._id);
+        }else{
+            res.send({message: "El usuario no existe"});
+        }
+    }catch(error){
+        console.log(error);
+        res.status(500).send({message: "Hubo un error"});
+    }
 
 exports.login = async(req, res) => {
 
@@ -100,13 +110,32 @@ let data;
 data=new users(req.body);
 await data.save();
 res.send(data)
+
 }
 
-catch(error){
-console.log(error);
+exports.postusers= async(req,res) =>{
 
-res.status(500).send('ups.. hubo un error, contacte al administrador');
-}
+try{
+    const user1 = await users.findOne({identification:req.body.identification}).exec();
+    const user2 = await users.findOne({phone_number:req.body.phone_number}).exec();
+    const user3 = await users.findOne({email:req.body.email}).exec();
+
+
+    if(user1){
+        res.send({message: "Identificación ya registrada"});
+    }else if(user2){
+        res.send({message: "Teléfono ya registrado"});
+    }else if(user3){
+        res.send({message: "Correo ya registrado"});
+    }else{
+        let data;
+        data=new users(req.body);
+        await data.save();
+        res.send(data)
+    }
+} catch(error){
+        console.log(error);
+        res.status(500).send({message: "Hubo un error"});
 
 },*/
 
@@ -146,12 +175,13 @@ res.status(500).send('ups.. hubo un error, contacte al administrador');
         })
     } catch (error) {
         res.status(400).json({error})
+
     }
 },
 
 exports.putusers = async(req, res) => {
     try {
-        const { full_name, identification, birth_date, number, email, password, id_cards} = req.body
+        const { full_name, identification, birth_date, phone_number, email, password, id_date} = req.body
         let data= await users.findById(req.params.id);
 
         if (!data) {
@@ -161,15 +191,15 @@ exports.putusers = async(req, res) => {
         data.full_name = full_name;
         data.identification = identification;
         data.birth_date = birth_date;
-        data.number = number;
+        data.number = phone_number;
         data.email = email;
         data.password = password;
-        data.id_cards = id_cards;
+        data.id_date = id_date;
            
     
 
-        data = await users.findOneAndUpdate({ _id: req.params.id }, data, { new: true })
-        res.json(data);
+        await users.findOneAndUpdate({ _id: req.params.id }, data, { new: true })
+        res.send({message: "Actualización exitosa"})
 
     } catch (error) {
         console.log(error);

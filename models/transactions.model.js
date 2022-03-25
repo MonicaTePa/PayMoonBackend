@@ -1,13 +1,10 @@
 const mongoose = require('mongoose');
 
 const transactionSchema = mongoose.Schema({
-    id_transaction: {
-        type: String,
-        required: true
-    },
+   
     type:{
         type:String,
-        required: true
+        required: false
     },
     id_payer:{
         type:String,
@@ -15,7 +12,7 @@ const transactionSchema = mongoose.Schema({
     },
     id_card:{
         type:String,
-        required: true
+        required: false
     },
     id_receiver:{
         type:String,

@@ -4,21 +4,12 @@ class DepositsController{
     constructor(){}   
     
     async createDeposit(req,res){
-        try{                     
-            const result = await DepositModel.findOne({id_deposit: req.body.id_deposit}).exec();
-            console.log(result);           
-            if(!result){                           
-                const deposit = new DepositModel(req.body);
-                await deposit.save();
-                res.send({
-                    message: "Depósito registrado con exito"
-                });
-            }else{
-                res.send({
-                    message: `Ya hay una depósito con el 'id_deposito' especificado`
-                });
-            }
-            
+        try{           
+            const deposit = new DepositModel(req.body);
+            await deposit.save();
+            res.send({
+                message: "Depósito registrado con exito"
+            });      
         }catch(error){
             console.log(error);
             res.status(500).send({

@@ -5,18 +5,13 @@ class TransactionsController{
 
     async createTransaction(req,res){
         try{                     
-            const result = await TransactionModel.findOne({id_transaction: req.body.id_transaction}).exec();                
-            if(!result){                           
-                const transaction = new TransactionModel(req.body);
-                await transaction.save();
-                res.send({
-                    message: "Transacción registrada con exito"
-                });
-            }else{
-                res.send({
-                    message: `Ya hay una transacción con el 'id_transaction' especificado`
-                });
-            }
+                                  
+            const transaction = new TransactionModel(req.body);
+            await transaction.save();
+            res.send({
+                message: "Transacción registrada con exito"
+            });
+            
             
         }catch(error){
             console.log(error);
@@ -80,7 +75,7 @@ class TransactionsController{
             if(result.length>0){
                 res.send(result);
             }else{
-                res.status(404).send({message: "No se encontraron coincidencias"});
+                res.send({message: "No se encontraron coincidencias"});
             }
         }catch(error){
             console.log(error);
