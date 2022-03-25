@@ -5,18 +5,18 @@ class TransactionsController{
 
     async createTransaction(req,res){
         try{                     
-            const result = await TransactionModel.findOne({id_transaction: req.body.id_transaction}).exec();                
-            if(!result){                           
-                const transaction = new TransactionModel(req.body);
-                await transaction.save();
-                res.send({
-                    message: "Transacción registrada con exito"
-                });
-            }else{
-                res.send({
-                    message: `Ya hay una transacción con el 'id_transaction' especificado`
-                });
-            }
+            // const result = await TransactionModel.findOne({id_transaction: req.body.id_transaction}).exec();                
+            // if(!result){                           
+            const transaction = new TransactionModel(req.body);
+            await transaction.save();
+            res.send({
+                message: "Transacción registrada con exito"
+            });
+            // }else{
+            //     res.send({
+            //         message: `Ya hay una transacción con el 'id_transaction' especificado`
+            //     });
+            // }
             
         }catch(error){
             console.log(error);

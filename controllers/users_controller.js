@@ -24,22 +24,43 @@ exports.getuserbyid = async(req,res) => {
     }
 }
 
+exports.getUserByPhone = async(req,res) =>{
+    try{
+        const user = await users.findOne({phone_number: req.params.pn}).exec();
+        if(user){
+            res.send(user._id);
+        }else{
+            res.send({message: "El usuario no existe"});
+        }
+    }catch(error){
+        console.log(error);
+        res.status(500).send({message: "Hubo un error"});
+    }
+}
+
 exports.postusers= async(req,res) =>{
 
 try{
-    
-let data;
-data=new users(req.body);
-await data.save();
-res.send(data)
-}
+    const user1 = await users.findOne({identification:req.body.identification}).exec();
+    const user2 = await users.findOne({phone_number:req.body.phone_number}).exec();
+    const user3 = await users.findOne({email:req.body.email}).exec();
 
-catch(error){
-console.log(error);
-
-res.status(500).send('ups.. hubo un error, contacte al administrador');
-}
-
+    if(user1){
+        res.send({message: "Identificación ya registrada"});
+    }else if(user2){
+        res.send({message: "Teléfono ya registrado"});
+    }else if(user3){
+        res.send({message: "Correo ya registrado"});
+    }else{
+        let data;
+        data=new users(req.body);
+        await data.save();
+        res.send(data)
+    }
+} catch(error){
+        console.log(error);
+        res.status(500).send({message: "Hubo un error"});
+    }
 },
 exports.putusers = async(req, res) => {
     try {
