@@ -62,6 +62,7 @@ exports.getUserByPhone = async(req,res) =>{
         console.log(error);
         res.status(500).send({message: "Hubo un error"});
     }
+    }
 
 exports.login = async(req, res) => {
  
