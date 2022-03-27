@@ -1,32 +1,33 @@
-const express = require("express");
-const body_parser = require("body-parser");
-const cors = require('cors');
-const connect_db = require('./config/database');
-const config = require('./config/config');
-const jwt = require('jsonwebtoken');
-const Bcrypt = require('bcryptjs');
-const verifyToken = require('./controllers/validate-token');
+try {
+	const cors = require('cors');
+	const express = require('express');
+	const properties = require('./config/properties');
+	const DB = require('./config/db');
+	const router = express.Router();
+	const routerApi = require('./routes/index');
+	
+	const app = express();
+	DB();
 
-const routerApi = require('./routes/index');
+	const bodyParser = require('body-parser');
+	const bodyParserJSON = bodyParser.json();
+	const bodyParserURLEncoded = bodyParser.urlencoded({ extended: true });
 
-const PORT = 3000;
+	app.use(bodyParserJSON);
+	app.use(bodyParserURLEncoded);
 
-const app = express();
-
-app.use(function(req, res, next) {
-res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update to match the domain you will make the request from
-res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-next();
-});
-app.set('llave', config.llave);
-app.use(body_parser.json());
-app.use(express.json());
-app.use(cors());
-
-connect_db();
-
-routerApi(app);
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port http://localhost:${PORT}`);
-});
+	app.use(cors());
+	
+	
+	
+	router.get('/', (req, res) => {
+		res.send('Hello form home')
+	});
+	routerApi(app);
+	app.use(router);
+	app.listen(properties.PORT, () => console.log('server runing on port 3000'));
+	
+	
+} catch (error) {
+	console.log(error);
+}

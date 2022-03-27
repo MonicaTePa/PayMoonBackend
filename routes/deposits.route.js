@@ -9,7 +9,6 @@ router.get('/', deposits_controller.getDeposits);
 router.get('/:id', deposits_controller.getDepositById);
 router.put('/:id', deposits_controller.updateDeposit);
 router.delete('/:id', deposits_controller.deleteDeposit);
-
 router.get('/deposit/:depoId', deposits_controller.getDepositByDepoId);
 router.get('/user/:userId', deposits_controller.getDepositByUserId);
 
