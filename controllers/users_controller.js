@@ -67,6 +67,7 @@ exports.getUserByPhone = async(req,res) =>{
             });
       
             const dataUser = {
+              _id: user._id,
               name: user.full_name,
               identification: user.identification,
               accessToken: accessToken,

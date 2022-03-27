@@ -19,6 +19,7 @@ exports.loginUser = (req, res, next)=>{
                   const accessToken = jwt.sign({id: user.id}, SECRET_KEY, { expiresIn: expiresIn });
           
           const dataUser = {
+            _id: user._id,
             name: user.full_name,
             identification: user.identification,
             accessToken: accessToken,
