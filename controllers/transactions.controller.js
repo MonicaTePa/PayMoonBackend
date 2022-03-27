@@ -8,14 +8,16 @@ class TransactionsController{
                                   
             const transaction = new TransactionModel(req.body);
             await transaction.save();
-            res.send({
-                message: "Transacción registrada con exito"
-            });
-            
+            res.send({ 
+                answer: "OK",
+                message: "Transacción registrada con éxito",
+                id: transaction._id
+            });            
             
         }catch(error){
             console.log(error);
             res.status(500).send({
+                answer: "ERROR",
                 message: "Error al crear la transacción"
             });
         }        
