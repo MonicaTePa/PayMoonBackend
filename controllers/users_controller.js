@@ -64,29 +64,50 @@ try{
 },
 exports.putusers = async(req, res) => {
     try {
-        const { full_name, identification, birth_date, phone_number, email, password, id_date} = req.body
+        // const { full_name, identification, birth_date, phone_number, email, password, id_date} = req.body
+        
         let data= await users.findById(req.params.id);
 
         if (!data) {
             res.status(404).json({ mensaje: 'No se encontraron coincidencias para la actualización de datos' })
         }
 
-        data.full_name = full_name;
-        data.identification = identification;
-        data.birth_date = birth_date;
-        data.number = phone_number;
-        data.email = email;
-        data.password = password;
-        data.id_date = id_date;
-           
-    
+        let user_data = req.body;
 
-        await users.findOneAndUpdate({ _id: req.params.id }, data, { new: true })
-        res.send({message: "Actualización exitosa"})
+        let user1 = await users.findOne({phone_number:user_data.phone_number}).exec();
+        let user2 = await users.findOne({email:user_data.email}).exec();      
+
+        if(user1 || user2){
+            if(user1._id.toString() !== data._id.toString()){
+                res.send({answer: "OK",message: "Teléfono ya regitrado"});
+            }else if(user2._id.toString() !== data._id.toString()){
+                res.send({answer: "OK", message: "Correo ya registrado"});
+            }else{
+                await users.findOneAndUpdate({ _id: req.params.id }, user_data, { new: true })
+                res.send({answer: "OK", message: "Actualización exitosa"});
+            }
+        }
+
+      
+       
+    
+    
+        
+
+
+        // data.full_name = full_name;
+        // data.identification = identification;
+        // data.birth_date = birth_date;
+        // data.number = phone_number;
+        // data.email = email;
+        // data.password = password;
+        // data.id_date = id_date;              
+
+        
 
     } catch (error) {
         console.log(error);
-        res.status(500).send('Ups... Hay un error, comuniquese con soporte');
+        res.status(500).send({answer: "ERROR", message: "Error al actualizar los datos"});
     }
 }
 

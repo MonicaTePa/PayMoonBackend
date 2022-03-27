@@ -22,11 +22,21 @@ const pocketSchema = mongoose.Schema({
         type: Number,
         default: 0    
     },
+    former_balance:{
+        type: Number,
+        default:0
+    },
+    last_deposit:{
+        type: Number,
+        default:0     
+    },
     date_cre: {
         type: Date,
         default: Date.now()
     }
-})
+}, 
+
+);
 
 
 module.exports = mongoose.model('pocket', pocketSchema)

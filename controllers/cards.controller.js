@@ -34,14 +34,16 @@ class CardsController {
 
   async getCard(req, res) {
     try {
-      const result = await CardsModel.find();
-      res.send(result);
+      const result = await CardsModel.find();   
       if (result.length === 0) {
-        console.log("No hay tarjetas registradas");
+        console.log("No hay tarjetas registradas");            
+      }else{
+        res.send(result);
       }
     } catch (error) {
       console.log(error);
       res.status(500).send({
+        answer: "OK",
         message: "Error al hacer la consulta"
       });
     }
@@ -117,16 +119,18 @@ class CardsController {
   async getCardByUserId(req, res) {
     try {
       const result = await CardsModel.find({id_user: req.params.id});
-      if (result) {
-        res.send(result);
+      if (result.length === 0) {
+        res.send({answer: "OK", message: "No tiene tarjetas registradas"}); 
       } else {
-        res.status(404).send({
-          message: "No se encontraron coincidencias"
-        });
+        res.send(result);
+        // res.status(404).send({
+        //   message: "No se encontraron coincidencias"
+        // });
       }
     } catch (error) {
       console.log(error);
       res.status(500).send({
+        answer: "OK",
         message: "Error al hacer la consulta"
       });
       console.log(error);

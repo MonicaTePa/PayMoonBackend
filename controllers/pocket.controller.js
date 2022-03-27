@@ -1,4 +1,4 @@
-const res = require('express/lib/response');
+//const res = require('express/lib/response');
 const Pocket = require('../models/Pocket.model');
 
 
@@ -26,25 +26,18 @@ exports.getPocket = async(req, res) => {
 }
 
 exports.putPocket = async(req, res) => {
-  try {
-    const { id_pocket, id_user, balance, receptions, payments, deposits } = req.body;
+  try{
     let data_pocket = await Pocket.findById(req.params.id);
     if(!data_pocket){
-      res.status(404).send('Ups...no se encontro ningun elemento');
+      res.status(404).send({ answer: "ERROR", message: "No hay coincidencias para atualizar" });
+    }else{
+      data_pocket = req.body;    
+      data_pocket = await Pocket.findByIdAndUpdate({ _id: req.params.id }, data_pocket, { new: true });   
+      res.send({ answer: "OK", message: "Bolsillo actualizado"
+      });
     }
-
-    data_pocket.id_pocket = id_pocket;
-    data_pocket.id_user = id_user;
-    data_pocket.balance = balance;
-    data_pocket.receptions = receptions;
-    data_pocket.payments = payments;
-    data_pocket.deposits = deposits;
-
-    data_pocket = await Pocket.findByIdAndUpdate({ _id: req.params.id }, data_pocket, { new: true });
-    res.json(data_pocket);
-
-  } catch (error) {
-      res.status(500).send('Ups...huno un problema');
+  }catch (error){
+      res.status(500).send({ answer: "ERROR", message: "Error de sistema" });
   }
 }
 
@@ -63,8 +56,14 @@ exports.deletePocket = async(req, res) => {
 exports.getPocketByUserId = async(req,res) => {
   try{
     let user_pocket = await Pocket.findOne({id_user: req.params.id});
-    res.send(user_pocket);
+    if(user_pocket){
+      res.send(user_pocket);
+    }else{
+      res.status(404).send({answer: "OK", message: "No se encontraron coincidencias"});
+    }    
+    // console.log(user_pocket);
   }catch(error){
-    res.status(500).send('Ups..hubo un error');
+    res.status(500).send({answer: "ERROR", message: "Error al consultar el bolsillo"});
+    console.log(error)
   }
 }

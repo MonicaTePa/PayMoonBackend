@@ -8,11 +8,14 @@ class DepositsController{
             const deposit = new DepositModel(req.body);
             await deposit.save();
             res.send({
-                message: "Depósito registrado con exito"
+                answer: "OK",
+                message: "Depósito registrado",
+                id: deposit._id
             });      
         }catch(error){
             console.log(error);
             res.status(500).send({
+                answer: "ERROR",
                 message: "Error al crear el depósito"
             });
         }        
@@ -87,7 +90,7 @@ class DepositsController{
             const result = await DepositModel.findById(req.params.id);
             if(result){
                let depositData = req.body;
-               delete depositData['id_deposit'];
+               //delete depositData['id_deposit'];
                await DepositModel.findByIdAndUpdate({_id:req.params.id}, depositData, {new:true});
                res.send({
                    message: "Actualización exitosa"
@@ -111,17 +114,19 @@ class DepositsController{
             if(result){
                 await DepositModel.findByIdAndRemove(req.params.id);
                 res.send({
+                    answer: "OK",
                     message: "Depósito eliminado"
                 });
             }else{
                 res.status(404).send({
+                    answer: "ERROR",
                     message: "No hay coincidencias para eliminar"
                 });
             }
         }catch(error){
             console.log(error);
             res.status(500).send({
-                message: "Error al hacer la eliminación"
+                message: "Error al eliminar el depósito"
             });
         }
     }   
