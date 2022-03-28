@@ -16,10 +16,13 @@ class CardsController {
         const card = new CardsModel(req.body);
         await card.save();
         res.send({
+          answer: "OK",
+          state: "SUCESS",
           message: "Tarjeta registrada con éxito"
         });
       } else {
         res.send({
+          answer:"OK",
           message: `La tarjeta ya se encuentra registrada en el sistema`
         });
       }
@@ -27,6 +30,7 @@ class CardsController {
     } catch (error) {
       console.log(error);
       res.status(500).send({
+        answer: "ERROR",
         message: "Error al registrar la tarjeta"
       });
     }
