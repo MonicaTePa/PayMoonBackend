@@ -46,7 +46,7 @@ exports.getUserByPhone = async(req,res) =>{
     }
     }
 
-    exports.createUser = (req, res, next) => {
+    exports.createUser = (req, res) => {
         const newUser = {
           full_name: req.body.full_name,
           birth_date: req.body.birth_date,
@@ -96,7 +96,7 @@ exports.putusers = async(req, res) => {
         data.birth_date = birth_date;
         data.number = phone_number;
         data.email = email;
-        data.password = password;
+        data.password = bcrypt.hashSync(password);
         data.id_date = id_date;
            
     
