@@ -122,10 +122,7 @@ class CardsController {
       if (result.length === 0) {
         res.send({answer: "OK", message: "No tiene tarjetas registradas"}); 
       } else {
-        res.send(result);
-        // res.status(404).send({
-        //   message: "No se encontraron coincidencias"
-        // });
+        res.send(result);       
       }
     } catch (error) {
       console.log(error);
