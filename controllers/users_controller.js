@@ -46,16 +46,28 @@ try{
     const user3 = await users.findOne({email:req.body.email}).exec();
 
     if(user1){
-        res.send({message: "Identificación ya registrada"});
+        res.send({
+            answer: "OK", 
+            code: 1,
+            message: "Identificación ya registrada"
+        });
     }else if(user2){
-        res.send({message: "Teléfono ya registrado"});
-    }else if(user3){
-        res.send({message: "Correo ya registrado"});
+        res.send({
+            answer: "OK", 
+            code: 2,
+            message: "Teléfono ya registrado"
+        });
+    }else if(user3){        
+        res.send({
+            answer: "OK", 
+            code: 3,
+            message: "Correo ya registrado"});
     }else{
         let data;
         data=new users(req.body);
         await data.save();
-        res.send(data)
+        res.send(data);            
+       
     }
 } catch(error){
         console.log(error);

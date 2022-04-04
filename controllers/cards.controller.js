@@ -5,24 +5,20 @@ class CardsController {
 
   async addCard(req, res) {
     try {
-      const result = await CardsModel.findOne({
-        $or: [
-          {card_number: req.body.card_number},
-          {card_name: req.body.card_name}
-      ]
-      }).exec();
+      const result = await CardsModel.findOne({card_number: req.body.card_number}).exec();        
       console.log(result);
       if (result==undefined || result ==null) {
         const card = new CardsModel(req.body);
         await card.save();
         res.send({
           answer: "OK",
-          state: "SUCESS",
+          code: 0,
           message: "Tarjeta registrada con éxito"
         });
       } else {
         res.send({
           answer:"OK",
+          code: 1,
           message: `La tarjeta ya se encuentra registrada en el sistema`
         });
       }
