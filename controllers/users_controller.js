@@ -91,12 +91,22 @@ exports.putusers = async(req, res) => {
 
         if(user1 || user2){
             if(user1._id.toString() !== data._id.toString()){
-                res.send({answer: "OK",message: "Teléfono ya regitrado"});
+                res.send({
+                    answer: "OK",
+                    code: 1,
+                    message: "Teléfono ya regitrado"
+                });
             }else if(user2._id.toString() !== data._id.toString()){
-                res.send({answer: "OK", message: "Correo ya registrado"});
+                res.send({
+                    answer: "OK", 
+                    code: 2,
+                    message: "Correo ya registrado"});
             }else{
                 await users.findOneAndUpdate({ _id: req.params.id }, user_data, { new: true })
-                res.send({answer: "OK", message: "Actualización exitosa"});
+                res.send({
+                    answer: "OK", 
+                    code: 0,
+                    message: "Actualización exitosa"});
             }
         }
 

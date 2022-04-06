@@ -101,6 +101,7 @@ class CardsController {
       if (result) {
         await CardsModel.findByIdAndRemove(req.params.id);
         res.send({
+          answer: "OK",
           message: "Tarjeta eliminada correctamente"
         });
       } else {
