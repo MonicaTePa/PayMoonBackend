@@ -30,7 +30,11 @@ exports.getUserByPhone = async(req,res) =>{
         if(user){
             res.send(user._id);
         }else{
-            res.send({answer: "OK", message: "El usuario no existe"});
+            res.send({
+                answer: "OK", 
+                code: 1,
+                message: "El usuario no existe"
+            });
         }
     }catch(error){
         console.log(error);

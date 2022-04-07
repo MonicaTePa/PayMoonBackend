@@ -6,6 +6,8 @@ const pocketRouter = require('../routes/pocket.route');
 const codesRouter = require('../routes/codes');
 const usersRouter = require('../routes/users.route');
 
+const operationsRouter = require('../routes/operations.route');
+
 function routerApi(app) {
     const router = express.Router();
     app.use('/api/v1',router);
@@ -15,6 +17,9 @@ function routerApi(app) {
     router.use('/pockets', pocketRouter);
     router.use('/codes', codesRouter);
     router.use('/users',usersRouter);
+
+    router.use('/operations', operationsRouter);
+
 }
 
 module.exports = routerApi;

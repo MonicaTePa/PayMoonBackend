@@ -4,8 +4,8 @@ class TransactionsController{
     constructor(){}    
 
     async createTransaction(req,res){
-        try{                     
-                                  
+        try{                  
+                                 
             const transaction = new TransactionModel(req.body);
             await transaction.save();
             res.send({ 

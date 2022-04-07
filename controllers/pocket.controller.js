@@ -25,6 +25,19 @@ exports.getPocket = async(req, res) => {
   }
 }
 
+exports.getPockets = async(req,res) =>{
+  try{
+    const data = await Pocket.find();
+    if(data.length === 0){
+      res.send('No se encontraron bolsillos');
+    }else{
+      res.send(data)
+    }
+  }catch(error){
+    res.status(500).send('Ups...hubo un error')
+  }  
+}
+
 exports.putPocket = async(req, res) => {
   try{
     let data_pocket = await Pocket.findById(req.params.id);
