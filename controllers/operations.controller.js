@@ -1,6 +1,6 @@
-const UserModel = require('../models/users');
 const TransactionModel = require('../models/transactions.model');
 const PocketModel = require('../models/Pocket.model');
+const DepositModel = require('../models/deposits.model');
 
 class OperationsController{
 
@@ -51,6 +51,46 @@ class OperationsController{
             res.status(500).send({
                 answer: "ERROR",
                 message: "Error al hacer la transacción"
+            });
+        }
+    }
+
+    async moneyDeposit(req,res){
+        try{
+            const deposit = new DepositModel(req.body);
+            const user_pocket = await PocketModel.findOne({id_user: deposit.id_user});
+            if(user_pocket){
+                // res.send(user_pocket);
+                user_pocket.former_balance = user_pocket.balance;
+                user_pocket.balance = user_pocket.balance + deposit.amount;
+                user_pocket.deposits = user_pocket.deposits + deposit.amount;
+                user_pocket.last_deposit = deposit.amount;
+
+                const result = await PocketModel.findByIdAndUpdate({_id:user_pocket._id}, user_pocket, { new:true});
+                if(result){
+                    await deposit.save();
+                    res.send({
+                        answer: "OK",
+                        code: 0,
+                        message: "Depósito existoso"                                         
+                    }); 
+                } else {
+                    res.status(500).send({
+                        answer: "ERROR",
+                        message: "Error al hacer el depósito"
+                    });
+                }              
+            }else{
+                res.status(404).send({
+                    answer: "ERROR",
+                    message: "No se encotró el bolsillo del usuario especificado"
+                });
+            }
+            
+        }catch(error){
+            res.status(500).send({
+                answer: "ERROR",
+                message: "Error al hacer el depósito"
             });
         }
     }
