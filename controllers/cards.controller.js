@@ -36,7 +36,9 @@ class CardsController {
     try {
       const result = await CardsModel.find();   
       if (result.length === 0) {
-        console.log("No hay tarjetas registradas");            
+        console.log("No hay tarjetas registradas"); 
+        res.send(result);
+        console.log(result);           
       }else{
         res.send(result);
       }
@@ -121,9 +123,10 @@ class CardsController {
     try {
       const result = await CardsModel.find({id_user: req.params.id});
       if (result.length === 0) {
-        res.send({answer: "OK", message: "No tiene tarjetas registradas"}); 
+        res.send({answer: "OK", message: "No tiene tarjetas registradas", data: result}); 
+        console.log(result);
       } else {
-        res.send(result);       
+        res.send({data: result});       
       }
     } catch (error) {
       console.log(error);
