@@ -68,10 +68,39 @@ module.exports.login_post = async (req,res) =>{
     }catch(error){
         res.status(500).send({answer: "ERROR", message: "Usuario no creado"});
         console.log(error);
+    }   
+      
+}
+
+
+module.exports.checkUser = async (req,res) =>{
+    const token = req.cookies.jwt;
+    try{
+        const reqUser = await UserModel.findById(req.params.id);
+        console.log(reqUser,  token);
+        if(token){
+            jwt.verify(token, 'secret_word', async (error, decodedToken) =>{
+                if(error){
+                    console.log(error.message);
+                    res.json({answer:"ERROR", message: error.message })
+                }else{
+                    console.log(decodedToken);
+                    const current_user = decodedToken.id;                    
+                    if(reqUser._id.toString() === current_user){
+                        
+                        res.json({answer: "OK"});   
+                    }else{
+                        res.json({answer: "ERROR", message: "Los usuarios no coinciden"}); 
+                    }                                    
+                }
+            });
+        }
+        // res.json( {answer: "OK", data: {user: reqUser, token: token} });
+    }catch(error){
+        res.status(500).json({answer:"ERROR", message: error.message })
+        console.log(error)
     }
-    
-  
-    
+   
 }
 
 module.exports.logout = (req,res) =>{
