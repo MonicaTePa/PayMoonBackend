@@ -1,7 +1,7 @@
 # PayMoonBackend
 
 Development of the backend of the PayMoon web application, an application for electronic payments and money transactions.  
-This project was developed as a final project of the FullSatck Development Bootcamp at BIT (Instituto Tecnológico de Bogotá). 
+This project was developed as a final project of the FullSatck Development Bootcamp at BIT (Bogota Institute of Technology). 
 It is implemented with NodeJS, Express and connects to a database in Mongo Atlas.
 
 Frontend Repository: https://github.com/MonicaTePa/PayMoon
